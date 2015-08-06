@@ -38,7 +38,7 @@ resources:
     properties:
       pool_id: {get_param: pool_id}
       address: {get_attr: [server, first_address]}
-      protocol_port: 80
+      protocol_port: 1026
 
 outputs:
   server_ip:
