@@ -46,7 +46,10 @@ resources:
               git clone https://github.com/scalanova/orion.git
               sudo cp /orion/orion.repo /etc/yum.repos.d/orion.repo
               sudo yum install contextBroker -y
-              contextBroker
+              sudo chmod +x /orion/check_orion.sh
+              sudo chmod +x /orion/make-run.sh
+              cd /orion
+              sh check_orion.sh
   docker:
     type: OS::Nova::Server
     properties:
