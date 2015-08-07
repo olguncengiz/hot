@@ -13,10 +13,6 @@ parameters:
     type: string
     description: flavor used by the web servers
     default: m1.compact
-  database_flavor:
-    type: string
-    description: flavor used by the db server
-    default: m1.compact
   network:
     type: string
     description: Network used by the server
@@ -42,34 +38,6 @@ resources:
     type: OS::Heat::RandomString
   database_root_password:
     type: OS::Heat::RandomString
-  db:
-    type: OS::Nova::Server
-    properties:
-      flavor: {get_param: database_flavor}
-      image: {get_param: image}
-      key_name: {get_param: key}
-      networks: [{network: {get_param: network} }]
-      user_data_format: RAW
-      user_data:
-        str_replace:
-          template: |
-            #!/bin/bash -v
-            yum -y install mariadb mariadb-server
-            systemctl enable mariadb.service
-            systemctl start mariadb.service
-            mysqladmin -u root password $db_rootpassword
-            cat << EOF | mysql -u root --password=$db_rootpassword
-            CREATE DATABASE $db_name;
-            GRANT ALL PRIVILEGES ON $db_name.* TO "$db_user"@"%"
-            IDENTIFIED BY "$db_password";
-            FLUSH PRIVILEGES;
-            EXIT
-            EOF
-          params:
-            $db_rootpassword: {get_attr: [database_root_password, value]}
-            $db_name: {get_param: database_name}
-            $db_user: {get_param: database_user}
-            $db_password: {get_attr: [database_password, value]}
   asg:
     type: OS::Heat::AutoScalingGroup
     properties:
@@ -98,7 +66,6 @@ resources:
                 $db_name: {get_param: database_name}
                 $db_user: {get_param: database_user}
                 $db_password: {get_attr: [database_password, value]}
-                $db_host: {get_attr: [db, first_address]}
   docker:
     type: OS::Nova::Server
     properties:
