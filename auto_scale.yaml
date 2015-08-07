@@ -21,23 +21,11 @@ parameters:
     type: string
     description: subnet on which the load balancer will be located
     default: 95d40f33-7745-4219-b453-c9b186cbc74d
-  database_name:
-    type: string
-    description: Name of the wordpress DB
-    default: wordpress
-  database_user:
-    type: string
-    description: Name of the wordpress user
-    default: wordpress
   external_network_id:
     type: string
     description: UUID of a Neutron external network
     default: ab847be2-989e-4063-b2a4-def1dc601e00
 resources:
-  database_password:
-    type: OS::Heat::RandomString
-  database_root_password:
-    type: OS::Heat::RandomString
   asg:
     type: OS::Heat::AutoScalingGroup
     properties:
@@ -52,20 +40,13 @@ resources:
           network: {get_param: network}
           pool_id: {get_resource: pool}
           metadata: {"metering.stack": {get_param: "OS::stack_id"}}
-          user_data:
-            str_replace:
-              template: |                
-                #!/bin/bash -v
-                
-                sudo service mongod start
-                git clone https://github.com/scalanova/orion.git
-                sudo cp /orion/orion.repo /etc/yum.repos.d/orion.repo
-                sudo yum install contextBroker -y
-                contextBroker
-              params:
-                $db_name: {get_param: database_name}
-                $db_user: {get_param: database_user}
-                $db_password: {get_attr: [database_password, value]}
+          user_data: |
+              #!/bin/bash -v
+              sudo service mongod start
+              git clone https://github.com/scalanova/orion.git
+              sudo cp /orion/orion.repo /etc/yum.repos.d/orion.repo
+              sudo yum install contextBroker -y
+              contextBroker
   docker:
     type: OS::Nova::Server
     properties:
