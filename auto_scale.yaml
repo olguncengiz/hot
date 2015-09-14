@@ -20,11 +20,11 @@ parameters:
   subnet_id:
     type: string
     description: subnet on which the load balancer will be located
-    default: c66ba424-7847-4c41-8d10-8e3ad630bf38
+    default: d55aaf82-76f9-444f-b9d3-5b458074f298
   external_network_id:
     type: string
     description: UUID of a Neutron external network
-    default: f83983a4-8a86-432b-b8d3-f6a36adb21ad
+    default: 532556a9-4ec9-4fb2-b63a-6878a70da90f
 resources:
   asg:
     type: OS::Heat::AutoScalingGroup
