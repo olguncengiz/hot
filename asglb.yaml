@@ -180,7 +180,70 @@ resources:
        floating_network: { get_param: public_net }
        port_id:
          { get_attr: [ssh_pool, vip, 'port_id'] }
-
+  
+  docker:
+    type: OS::Nova::Server
+    properties:
+      flavor: {get_param: flavor}
+      image: {get_param: image}
+      key_name: {get_param: key}
+      networks: [{network: {get_param: network} }]
+      user_data_format: RAW
+      user_data: |
+        #!/bin/bash -v
+        sudo yum install docker-io -y
+        sudo service docker start
+        sudo chkconfig docker on
+        sudo yum install git
+        sudo yum install nano -y
+  
+  nats:
+    type: OS::Nova::Server
+    properties:
+      flavor: {get_param: flavor}
+      image: {get_param: image}
+      key_name: {get_param: key}
+      networks: [{network: {get_param: network} }]
+      user_data_format: RAW
+      user_data: |
+        #!/bin/bash -v
+        sudo yum install http://ftp.riken.jp/Linux/fedora/epel/6/i386/epel-release-6-8.noarch.rpm -y bash
+        sudo yum install golang -y bash
+        sudo yum install hg -y bash
+        sudo yum update -y bash
+        sudo mkdir /home/go
+        export GOPATH=/usr/lib/go
+        export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+        /bin/cat <<EOM >> $HOME/.bashrc
+        export GOPATH=/usr/lib/go
+        export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+        EOM
+        sudo yum install git -y bash
+        sudo yum install docker-io -y
+        sudo service docker start
+        sudo docker pull apcera/gnatsd
+        sudo docker run -p 0.0.0.0:4222:4222 -d apcera/gnatsd
+  
+  jmeter:
+    type: OS::Nova::Server
+    properties:
+      flavor: {get_param: flavor}
+      image: {get_param: image}
+      key_name: {get_param: key}
+      networks: [{network: {get_param: network} }]
+      user_data_format: RAW
+      user_data: |
+        #!/bin/bash -v
+        sudo yum install git -y bash
+        sudo yum install docker-io -y
+        sudo git clone https://github.com/scalanova/docker_jmeter.git
+        ls -l
+        cd /docker_jmeter
+        pwd
+        sudo service docker start 
+        sudo make build
+        sudo chmod 777 test.sh
+  
 outputs:
 
   app_lb_url:
