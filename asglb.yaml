@@ -81,7 +81,7 @@ resources:
       min_size: { get_param: min_asg_size }
       cooldown: { get_param: cooldown }
       resource:
-        type: OS::Test::NeutronAppServer
+        type: https://raw.githubusercontent.com/olguncengiz/hot/master/app_server_neutron.yaml
         properties:
           mdata: {"metering.stack": {get_param: "OS::stack_id"}}
           image: { get_param: image }
