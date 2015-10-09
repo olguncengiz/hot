@@ -44,7 +44,7 @@ resources:
             sudo chmod +x /orion/make-run.sh
             wc_notify --data-binary '{"status": "SUCCESS"}'
             cd /orion
-            sh check_orion.sh
+            sudo sh check_orion.sh
           params:
             wc_notify: {  get_attr: [ handle, curl_cli ]  }
 
