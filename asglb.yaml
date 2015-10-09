@@ -21,10 +21,10 @@ parameters:
     default: root
   key_name:
     type: string
-    default: demo
+    default: ericsson
   net:
     type: string
-    default: lb-net
+    default: net04
   subnet:
     type: string
     default: net04__subnet
