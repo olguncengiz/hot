@@ -187,7 +187,7 @@ outputs:
     description: URL of the loadbalanced app
     value:
       str_replace:
-        template: http://IP_ADDRESS:PORT
+        template: http://IP_ADDRESS:PORT/version
         params:
           IP_ADDRESS: { get_attr: [ app_floating_ip, floating_ip_address ] }
           PORT: { get_param: app_lb_port }
