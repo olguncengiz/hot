@@ -36,7 +36,16 @@ resources:
       config:
         str_replace:
           template: |
-            #! /bin/sh -v
+            #! /bin/sh -v 
+            # Stress Tool Installation
+            sudo wget http://people.seas.harvard.edu/~apw/stress/stress-1.0.4.tar.gz
+            sudo tar -xvzf stress-1.0.4.tar.gz
+            sudo rm stress-1.0.4.tar.gz
+            sudo yum groupinstall "Development tools"
+            cd stress-1.0.4
+            ./configure && make && sudo make install
+            
+            # Orion Context Broker Installation
             git clone https://github.com/olguncengiz/orion.git
             sudo cp /orion/orion.repo /etc/yum.repos.d/orion.repo
             sudo yum install contextBroker -y
