@@ -37,8 +37,7 @@ resources:
         str_replace:
           template: |
             #! /bin/sh -v
-            sudo service mongod start
-            git clone https://github.com/scalanova/orion.git
+            git clone https://github.com/olguncengiz/orion.git
             sudo cp /orion/orion.repo /etc/yum.repos.d/orion.repo
             sudo yum install contextBroker -y
             sudo chmod +x /orion/check_orion.sh
