@@ -187,7 +187,8 @@ resources:
       flavor: {get_param: flavor}
       image: {get_param: image}
       key_name: {get_param: key_name}
-      networks: [{network: {get_param: net} }]
+      networks:
+        - network: { get_param: net }
       user_data_format: RAW
       user_data: |
         #!/bin/bash -v
@@ -203,7 +204,8 @@ resources:
       flavor: {get_param: flavor}
       image: {get_param: image}
       key_name: {get_param: key_name}
-      networks: [{network: {get_param: net} }]
+      networks:
+        - network: { get_param: net }
       user_data_format: RAW
       user_data: |
         #!/bin/bash -v
@@ -230,7 +232,8 @@ resources:
       flavor: {get_param: flavor}
       image: {get_param: image}
       key_name: {get_param: key_name}
-      networks: [{network: {get_param: net} }]
+      networks:
+        - network: { get_param: net }
       user_data_format: RAW
       user_data: |
         #!/bin/bash -v
