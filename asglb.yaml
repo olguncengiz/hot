@@ -186,7 +186,7 @@ resources:
     properties:
       flavor: {get_param: flavor}
       image: {get_param: image}
-      key_name: {get_param: key}
+      key_name: {get_param: key_name}
       networks: [{network: {get_param: network} }]
       user_data_format: RAW
       user_data: |
@@ -202,7 +202,7 @@ resources:
     properties:
       flavor: {get_param: flavor}
       image: {get_param: image}
-      key_name: {get_param: key}
+      key_name: {get_param: key_name}
       networks: [{network: {get_param: network} }]
       user_data_format: RAW
       user_data: |
@@ -229,7 +229,7 @@ resources:
     properties:
       flavor: {get_param: flavor}
       image: {get_param: image}
-      key_name: {get_param: key}
+      key_name: {get_param: key_name}
       networks: [{network: {get_param: network} }]
       user_data_format: RAW
       user_data: |
