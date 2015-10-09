@@ -36,14 +36,7 @@ resources:
       config:
         str_replace:
           template: |
-            #! /bin/sh -v 
-            sudo wget http://people.seas.harvard.edu/~apw/stress/stress-1.0.4.tar.gz
-            sudo tar -xvzf stress-1.0.4.tar.gz
-            sudo rm stress-1.0.4.tar.gz
-            sudo yum groupinstall "Development tools"
-            cd stress-1.0.4
-            ./configure && make && sudo make install
-            
+            #! /bin/sh -v
             git clone https://github.com/olguncengiz/orion.git
             sudo cp /orion/orion.repo /etc/yum.repos.d/orion.repo
             sudo yum install contextBroker -y
@@ -54,7 +47,6 @@ resources:
             sudo sh check_orion.sh
           params:
             wc_notify: {  get_attr: [ handle, curl_cli ]  }
-
 
   server:
     type: OS::Nova::Server
