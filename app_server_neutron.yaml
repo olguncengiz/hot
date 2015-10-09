@@ -37,8 +37,6 @@ resources:
         str_replace:
           template: |
             #! /bin/sh -v
-            echo 'SCRIPT' > /bin/cpuload
-            chmod 777 /bin/cpuload
             sudo service mongod start
             git clone https://github.com/scalanova/orion.git
             sudo cp /orion/orion.repo /etc/yum.repos.d/orion.repo
@@ -49,8 +47,6 @@ resources:
             cd /orion
             sh check_orion.sh
           params:
-            SCRIPT: {get_file: cpuload}
-            PORT: { get_param: app_port }
             wc_notify: {  get_attr: [ handle, curl_cli ]  }
 
 
