@@ -37,6 +37,7 @@ resources:
         str_replace:
           template: |
             #! /bin/sh -v
+            sudo yum install -y stress
             git clone https://github.com/olguncengiz/orion.git
             sudo cp /orion/orion.repo /etc/yum.repos.d/orion.repo
             sudo yum install contextBroker -y
